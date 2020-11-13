@@ -33,13 +33,38 @@ const listUsers = [
 
 const setUsers = {
   user: null,
-  logIn() {
-
+  logIn(email, password) {
+  
   },
   logOut() {
-
+    console.log('Выход');
   },
-  signIn() {
-    
+  signUp(email, password) {
+    if (!this.getUser(email)) {
+      listUsers.push({email, password, displayName: email});
+    } else {
+      alert('Пользователь уже зарегистрирован!');
+    }
+  },
+  getUser(email) {
+    return listUsers.find(item => item.email === email)
   }
-}
+};
+
+loginForm.addEventListener('submit', (event) => {
+  event.preventDefault();
+  
+  const emailValue = emailInput.value;
+  const passwordValue = passwordInput.value;
+  
+  setUsers.logIn(emailValue, passwordValue);
+});
+
+loginSignup.addEventListener('click', (event) => {
+  event.preventDefault();
+   
+  const emailValue = emailInput.value;
+  const passwordValue = passwordInput.value;
+  
+  setUsers.signUp(emailValue, passwordValue);
+});
