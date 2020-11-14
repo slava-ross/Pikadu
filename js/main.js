@@ -36,10 +36,11 @@ const listUsers = [
 
 const setUsers = {
   user: null,
-  logIn(email, password) {
+  logIn(email, password, handler) {
     const user = this.getUser(email);
     if (user && user.password === password) {
-      this.authorizedUser(user)
+      this.authorizedUser(user);
+      handler();
     } else {
       alert('Пользователь не найден!');
     }
@@ -47,10 +48,12 @@ const setUsers = {
   logOut() {
     console.log('Выход');
   },
-  signUp(email, password) {
+  signUp(email, password, handler) {
     if (!this.getUser(email)) {
-      listUsers.push({email, password, displayName: email});
-      console.log(listUsers);
+      const user = {email, password, displayName: email};
+      listUsers.push(user);
+      this.authorizedUser(user);
+      handler();
     } else {
       alert('Пользователь с таким email уже зарегистрирован!');
     }
@@ -82,7 +85,7 @@ loginForm.addEventListener('submit', (event) => {
   const emailValue = emailInput.value;
   const passwordValue = passwordInput.value;
   
-  setUsers.logIn(emailValue, passwordValue, toggleAuthDom());
+  setUsers.logIn(emailValue, passwordValue, toggleAuthDom);
 });
 
 loginSignup.addEventListener('click', (event) => {
@@ -90,7 +93,7 @@ loginSignup.addEventListener('click', (event) => {
   const emailValue = emailInput.value;
   const passwordValue = passwordInput.value;
   
-  setUsers.signUp(emailValue, passwordValue, toggleAuthDom());
+  setUsers.signUp(emailValue, passwordValue, toggleAuthDom);
 });
 
 toggleAuthDom();
