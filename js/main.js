@@ -50,7 +50,7 @@ const setUsers = {
   },
   signUp(email, password, handler) {
     if (!this.getUser(email)) {
-      const user = {email, password, displayName: email};
+      const user = {email, password, displayName: email.split('@')[0]};
       listUsers.push(user);
       this.authorizedUser(user);
       handler();
